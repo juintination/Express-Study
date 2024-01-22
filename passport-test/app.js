@@ -75,8 +75,9 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/'}), (req
 
 // logout
 app.get("/logout", (req, res, next) => {
-	req.session.destroy();
-  res.redirect('/');
+	req.logout(() => {
+		res.redirect('/');
+	})
 });
 
 app.set('views', path.join(__dirname, 'views'));
