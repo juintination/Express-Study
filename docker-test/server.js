@@ -1,10 +1,18 @@
-const express = require("express")
+var express = require("express")
 
-const PORT = 3000
+var http = require("http")
+var path = require("path")
 
-const app = express()
-app.get("/", (req, res) => {
-  res.send("Hello World")
+var app = express()
+
+app.set("port", 3000)
+app.set("views", path.join(__dirname, "views"))
+app.set("view engine", "jade")
+
+app.all("*", (req, res) => {
+  res.render("index")
 })
 
-app.listen(PORT, console.log(`Running on http://localhost:${PORT}`))
+http.createServer(app).listen(app.get("port"), () => {
+  console.log("Express server listening on port " + app.get("port"))
+})
